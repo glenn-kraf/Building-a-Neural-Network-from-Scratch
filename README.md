@@ -27,15 +27,4 @@ Tech Stack
 
 ---
 
-Motivation
-
-This project demonstrates how neural networks can be implemented entirely from first principles, providing deeper insight into:
-	•	Backpropagation
-	•	Optimization dynamics
-	•	Learning behavior of neural networks
-	•	Comparing Gradient Descent with Stochastic Gradient Descent
-	
-
----
-
 The implementations are based on the mathematical formulation for feed forward neural networks found in C. Higham and D. Higham, Deep Learning: An Introduction for Applied Mathematicians. SIAM REVIEW, Vol. 61, No. 4, pp. 860-891, 2019.
