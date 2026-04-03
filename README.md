@@ -10,7 +10,7 @@ Core deep learning components are built manually:
 
 The focus is on understanding the mathematical foundations of neural network training without using external ML libraries.
 
-⸻
+#⸻
 
 Model
 	•	Architecture: Layer sizes 2 → 3 → 3 → 1
