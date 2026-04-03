@@ -33,5 +33,4 @@ This project demonstrates how neural networks can be implemented entirely from f
 
 ⸻
 
-The implementations are based on the mathematical forumulation for feed forward neural networks found in C. Higham and D. Higham. Deep Learning: An Introduction for Applied Mathe-
-maticians. SIAM REVIEW, Vol. 61, No. 4, pp. 860-891, 2019.
+The implementations are based on the mathematical forumulation for feed forward neural networks found in C. Higham and D. Higham. Deep Learning: An Introduction for Applied Mathematicians. SIAM REVIEW, Vol. 61, No. 4, pp. 860-891, 2019.
