@@ -4,6 +4,10 @@
   <img src="FFNN_architecture.png" width="900">
 </p>
 
+---
+
+## Overview
+
 This project implements a feedforward neural network for binary classification from scratch in MATLAB.
 
 Core deep learning components are built manually:
@@ -17,14 +21,14 @@ The focus is on understanding the mathematical foundations of neural network tra
 
 ---
 
-Model
+## Model
 
 	•	Architecture: Layer sizes 2 → 3 → 3 → 1
 	•	Activation: Sigmoid
 	•	Task: Binary classification on [0,1]^2
 	
 
-Tech Stack
+## Tech Stack
 
 	•	MATLAB
 	•	No external dependencies
