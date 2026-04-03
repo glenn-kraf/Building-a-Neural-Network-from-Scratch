@@ -1,0 +1,140 @@
+function DL_Classification_GD
+
+% Uses backpropagation to train a neural network with GD
+
+%%%%%%% DATA %%%%%%%%%%%
+x1 = [0.2,0.4,0.7,0.7,0.9,0.1,0.4,0.5,0.6,0.9];
+x2 = [0.6,0.8,0.8,0.3,0.6,0.2,0.5,0.7,0.2,0.4];
+y = [zeros(1,5) ones(1,5)];
+
+% Initialize weights and biases 
+rng(5000);
+W2 = 0.5*randn(3,2); W3 = 0.5*randn(3,3); W4 = 0.5*randn(1,3);
+b2 = 0.5*randn(3,1); b3 = 0.5*randn(3,1); b4 = 0.5*randn;
+
+% Forward and Back propagate 
+eta = 0.1;                 % learning rate
+Niter = 1e6;               % number of SG iterations 
+savecost = zeros(Niter,1); % value of cost function at each iteration
+
+%{ 
+Learning rate sequence                          
+eta = [zeros(1,Niter)];
+a = 100;
+for j =1:Niter
+    eta(j) = a/(j^(0.51));
+end
+%}
+
+
+for counter = 1:Niter
+    % Temporaries
+    tempW2 = zeros(3,2);
+    tempW3 = zeros(3,3);
+    tempW4 = zeros(1,3);
+    tempb2 = zeros(3,1);
+    tempb3 = zeros(3,1);
+    tempb4 = 0;
+
+    for k = 1:10
+        x = [x1(k); x2(k)];
+        % Forward pass
+        a2 = activate(x,W2,b2);
+        a3 = activate(a2,W3,b3);
+        a4 = activate(a3,W4,b4);
+        % Backward pass
+        delta4 = a4.*(1-a4).*(a4-y(k));
+        delta3 = a3.*(1-a3).*(W4'*delta4);
+        delta2 = a2.*(1-a2).*(W3'*delta3);
+        % Change temporaries
+        tempW2 = tempW2 + delta2*x';
+        tempW3 = tempW3 + delta3*a2';
+        tempW4 = tempW4 + delta4*a3';
+        tempb2 = tempb2 + delta2;
+        tempb3 = tempb3 + delta3;
+        tempb4 = tempb4 + delta4;
+    end
+    tempW2 = tempW2./10;
+    tempW3 = tempW3./10;
+    tempW4 = tempW4./10;
+    tempb2 = tempb2./10;
+    tempb3 = tempb3./10;
+    tempb4 = tempb4./10;
+    % Gradient step
+    W2 = W2 - eta*tempW2;
+    W3 = W3 - eta*tempW3;
+    W4 = W4 - eta*tempW4;
+    b2 = b2 - eta*tempb2;
+    b3 = b3 - eta*tempb3;
+    b4 = b4 - eta*tempb4;
+    % Monitor progress
+    newcost = cost(W2,W3,W4,b2,b3,b4)   % display cost to screen
+    savecost(counter) = newcost;
+end
+
+figure(1)
+
+% Show decay of cost function  
+save costvec
+semilogy([1:10:Niter],savecost(1:10:Niter))
+
+  function costval = cost(W2,W3,W4,b2,b3,b4)
+     costvec = zeros(10,1); 
+     for i = 1:10
+         x =[x1(i);x2(i)];
+         a2 = activate(x,W2,b2);
+         a3 = activate(a2,W3,b3);
+         a4 = activate(a3,W4,b4);
+         costvec(i) = norm(y(i) - a4,2);
+     end
+     costval = norm(costvec,2)^2;
+  end % end of nested function
+    
+figure(2) 
+
+% Show predicted distribution
+
+    function s = neunet(o,u)
+        x = [o; u];
+        a2 = activate(x,W2,b2);
+        a3 = activate(a2,W3,b3);
+        a4 = activate(a3,W4,b4);
+        s = a4;        
+    end
+
+    xa = linspace(0,1,500);
+    ya = linspace(0,1,500);
+    D = zeros(5,5);
+    for i = 1:500
+        for j = 1:500
+            D(i,j) = neunet(xa(i),ya(j));
+        end
+    end
+    imagesc(xa,ya,D');
+    cm = (gray(200)); colormap(cm(150:200,:));
+    set(gca,'YDir','normal');
+    hold on
+
+    scale = 6;
+    set(gca,'Units', 'Inches');
+    set(gca, 'Position', scale*[0.25, 0.25, 1, 1]);
+    xticks([0 1]);
+    xticklabels({'0','1'});
+    yticks([0 1]);
+    axis square;
+
+    box on 
+    hold on
+
+    plot(0.1, 0.2, '.', 'MarkerSize',scale*7, 'MarkerEdgeColor','b');
+    plot(0.4, 0.5, '.', 'MarkerSize',scale*7, 'MarkerEdgeColor','b');
+    plot(0.5, 0.7, '.', 'MarkerSize',scale*7, 'MarkerEdgeColor','b');
+    plot(0.6, 0.2, '.', 'MarkerSize',scale*7, 'MarkerEdgeColor','b');
+    plot(0.9, 0.4, '.', 'MarkerSize',scale*7, 'MarkerEdgeColor','b');
+    plot(0.2, 0.6, '.', 'MarkerSize',scale*7, 'MarkerEdgeColor','r');
+    plot(0.4, 0.8, '.', 'MarkerSize',scale*7, 'MarkerEdgeColor','r');
+    plot(0.7, 0.8, '.', 'MarkerSize',scale*7, 'MarkerEdgeColor','r');
+    plot(0.7, 0.3, '.', 'MarkerSize',scale*7, 'MarkerEdgeColor','r');
+    plot(0.9, 0.6, '.', 'MarkerSize',scale*7, 'MarkerEdgeColor','r');
+
+end
