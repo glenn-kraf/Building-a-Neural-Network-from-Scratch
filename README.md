@@ -1,5 +1,9 @@
 # Building-a-Neural-Network-from-Scratch
 
+<p align="center">
+  <img src="FFNN_architecture.png" width="900">
+</p>
+
 This project implements a feedforward neural network for binary classification from scratch in MATLAB.
 
 Core deep learning components are built manually:
